@@ -3,7 +3,7 @@
     <section id="available" class="py-[80px] bg-[#E5E5E5]">
         <div class="container flex gap-[40px] flex-wrap">
             <template x-for="(paket, index) in course">
-                <div class="card max-w-[328px] rounded-lg shadow-md ">
+                <div class="card max-w-[328px] rounded-lg shadow-md bg-white">
                     <a href="#">
                     <img x-bind:src="`http://localhost:8000/storage/${paket.thumbnail}`" class="rounded-t-lg" src="" alt="" />
                     </a>
@@ -15,7 +15,7 @@
                         <p x-text="paket.guru.nama" class=" font-normal text-[#545BE8]"></p>
                         <p x-text="'Durasi Belajar ' +paket.durasi_belajar+ ' Menit'" class="text-gray-700 dark:text-gray-400"></p>
                         <p x-text="paket.jumlah_pertemuan+ ' Kali Pertemuan'" class="text-gray-700 dark:text-gray-400"></p>
-                        <p x-text="'Rp. '+ paket.harga" class="text-[#141E32] font-bold"></p>
+                        <p x-text="'Rp. '+(paket.harga/1000).toFixed(3)" class="text-[#141E32] font-bold"></p>
                         <button type="button" 
                         class="mt-3 inline-flex items-center px-[30px] py-[10px] text-sm font-medium text-center text-white rounded-lg bg-primary" x-on:click="tes(paket.id)" x-bind:message="'Apakah anda yakin?'" >
                         Get

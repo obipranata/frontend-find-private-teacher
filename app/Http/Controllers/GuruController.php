@@ -199,4 +199,63 @@ class GuruController extends Controller
         }
         return redirect()->route('guru.paket')->with($status, $pesan);
     }
+
+    public function profile()
+    {
+        $id_user = session()->get('idUser');
+        $getMe = HttpClient::fetch(
+            "GET",
+            "http://localhost:8000/api/guru/".$id_user
+        );
+        $data = $getMe['data'];
+        $data['route'] = 'guru.updateProfile';
+        return view('guru.profile', compact('data'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $payload = $request->all();
+
+        $id_user = session()->get('idUser');
+
+        // update password
+        $user = HttpClient::fetch(
+            "POST",
+            "http://localhost:8000/api/user/".$id_user."/update",
+            $payload
+        );
+
+        $guru = HttpClient::fetch(
+            "GET",
+            "http://localhost:8000/api/guru/".$id_user
+        );
+
+        $id = $guru['data']['id'];
+
+        $file = [];
+
+        if (isset($payload['foto'])) {
+            $file = [
+                'foto' => $request->file('foto')
+            ];
+        }
+
+        $update = HttpClient::fetch(
+            "POST",
+            "http://localhost:8000/api/guru/$id/edit",
+            $payload,
+            $file
+        );
+
+        if ($update['status']) {
+            $pesan = "data berhasil diupdate";
+            $status = "success";
+            session()->put('foto', $update['data']['foto']);
+        } else {
+            $pesan = "gagal!!";
+            $status = "error";
+        }
+
+        return redirect()->back()->with($status, $pesan);
+    }
 }

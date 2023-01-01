@@ -54,7 +54,7 @@ class AuthController extends Controller
         } elseif ($role == 1) {
             return redirect()->route('guru.pemesanan');
         }
-        return redirect('/')->with('success', $auth['message']);
+        return redirect('/')->with('success', "Login berhasil! Selamat Datang");
     }
 
     public function register(Request $request)

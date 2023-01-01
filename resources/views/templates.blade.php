@@ -16,6 +16,8 @@
   
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+  <script defer src="https://unpkg.com/alpinejs-money@latest/dist/money.min.js"></script>
+
   <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
   
   @livewireStyles
@@ -75,13 +77,16 @@
           <li><a href="/" class="text-[16px] leading-[24px] {{Request::segment(1) == '' ? 'font-bold' : ''}}">Home</a></li>
           <li><a href="/course" class="text-[16px] leading-[24px] {{Request::segment(1) == 'course' ? 'font-bold' : ''}}">Course</a></li>
           <li><a href="/order" class="text-[16px] leading-[24px] {{Request::segment(1) == 'order' ? 'font-bold' : ''}}">Order</a></li>
+          @if (session()->has('token') && session()->get('role') == 2)
+            <li><a href="/profile" class="text-[16px] leading-[24px] {{Request::segment(1) == 'profile' ? 'font-bold' : ''}}">Profile</a></li>
+          @endif
         </ul>
-        @if (!session()->has('token') && !session()->get('role') == 1)
+        @if (!session()->has('token') && !session()->get('role') == 2)
           <button
             class="border-2 border-primary px-[40px] py-[8px] rounded-[10px] text-primary text-[12px] font-bold" data-modal-toggle="authentication-modal">Login</button>
           <button
             class="bg-primary px-[40px] py-[10px] rounded-[10px] text-white text-[12px] font-bold" data-modal-toggle="register-modal">Register</button>
-            @else
+        @else
             <a href="/logout"
             class="bg-primary px-[40px] py-[10px] rounded-[10px] text-white text-[12px] font-bold">Logout</a>
         @endif

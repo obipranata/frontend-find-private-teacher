@@ -36,6 +36,8 @@ Route::get('/course', function () {
 });
 
 Route::get('/', [HomeController::class, "index"]);
+Route::get('/profile', [HomeController::class, "profile"])->name('profile')->middleware(['ortu']);
+Route::post('/update-profile', [HomeController::class, "updateProfile"])->name('updateProfile')->middleware(['ortu']);
 
 Route::middleware(['admin'])->prefix("mapel")->name("mapel.")->controller(MataPelajaranController::class)->group(function () {
     Route::get('/', 'index')->name('index');
@@ -61,7 +63,8 @@ Route::get('/guru/{id}/edit-paket', [GuruController::class, "editPaket"])->name(
 Route::get('/guru/{id}/delete-paket', [GuruController::class, "destroyPaket"])->name('guru.destroyPaket')->middleware(['guru']);
 Route::post('/guru/store-paket', [GuruController::class, "storePaket"])->name('guru.storePaket')->middleware(['guru']);
 Route::post('/guru/{id}/update-paket', [GuruController::class, "updatePaket"])->name('guru.updatePaket')->middleware(['guru']);
-
+Route::post('/guru/update-profile', [GuruController::class, "updateProfile"])->name('guru.updateProfile')->middleware(['guru']);
+Route::get('/guru/profile', [GuruController::class, "profile"])->name('guru.profile')->middleware(['guru']);
 
 Route::get('/guru/edit-status/{id}', [GuruController::class, "editStatus"])->name('guru.editStatus')->middleware(['guru']);
 Route::get('/guru/pemesanan', [GuruController::class, "pemesanan"])->name('guru.pemesanan')->middleware(['guru']);
