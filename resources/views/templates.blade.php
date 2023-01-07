@@ -48,7 +48,7 @@
     }
   </script>
 
-  <title>Landing Page</title>
+  <title>Obito Course</title>
 </head>
 
 <body>
